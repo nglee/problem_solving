@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KickstartPracticeRound2018A
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KickstartPracticeRound2018B_Googol_String", "KickstartPracticeRound2018B_Googol_String\KickstartPracticeRound2018B_Googol_String.vcxproj", "{8B9FB273-3FC4-49A0-9A6B-905C740B3DC3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10451_Permutation_Cycles", "10451_Permutation_Cycles\10451_Permutation_Cycles.vcxproj", "{FD604B61-FDD5-4B73-9CED-F410ED019450}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -101,6 +103,14 @@ Global
 		{8B9FB273-3FC4-49A0-9A6B-905C740B3DC3}.Release|x64.Build.0 = Release|x64
 		{8B9FB273-3FC4-49A0-9A6B-905C740B3DC3}.Release|x86.ActiveCfg = Release|Win32
 		{8B9FB273-3FC4-49A0-9A6B-905C740B3DC3}.Release|x86.Build.0 = Release|Win32
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Debug|x64.ActiveCfg = Debug|x64
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Debug|x64.Build.0 = Debug|x64
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Debug|x86.Build.0 = Debug|Win32
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Release|x64.ActiveCfg = Release|x64
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Release|x64.Build.0 = Release|x64
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Release|x86.ActiveCfg = Release|Win32
+		{FD604B61-FDD5-4B73-9CED-F410ED019450}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
