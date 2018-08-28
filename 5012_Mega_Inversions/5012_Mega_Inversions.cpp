@@ -6,46 +6,56 @@
 
 using namespace std;
 
+template <typename T>
 class SegTree
 {
+    typedef size_t idx_t;
+
 public:
-    SegTree(int num_elems)
+    SegTree(idx_t num_elems)
     {
-        a = make_unique<vector<unsigned long long>>(num_elems);
-        tree = make_unique<vector<unsigned long long>>(powl(2, ceill(log2l(num_elems)) + 1) - 1);
+        a = make_unique<vector<T>>(num_elems);
+        tree = make_unique<vector<T>>(powl(2, ceill(log2l(num_elems)) + 1) - 1);
     }
 
-    unsigned long long build_tree(unsigned long long node, unsigned long long start, unsigned long long end)
+    void build_tree()
     {
-        if (start == end) {
-            tree->at(node) = a->at(end);
-            a->at(end) = node;
+        build_(0, 0, a->size() - 1);
+    }
+
+private:
+    T build_(idx_t node, idx_t left, idx_t right)
+    {
+        if (left == right) {
+            tree->at(node) = a->at(right);
+            a->at(right) = node;
             return tree->at(node);
         }
         else {
             return tree->at(node) =
-                build_tree((node + 1) * 2 - 1, start, (start + end) / 2)
-                + build_tree((node + 1) * 2, (start + end) / 2 + 1, end);
+                build_((node + 1) * 2 - 1, left, (left + right) / 2)
+                + build_((node + 1) * 2, (left + right) / 2 + 1, right);
         }
     }
 
-    void replace(unsigned long long idx, unsigned long long val)
+public:
+    void replace(idx_t idx, T val)
     {
-        unsigned long long tree_idx = a->at(idx);
-        unsigned long long diff = val - tree->at(tree_idx);
+        idx_t tree_idx = a->at(idx);
+        T diff = val - tree->at(tree_idx);
         tree->at(tree_idx) = val;
         propagate_up(tree_idx, diff);
     }
 
-    void inc(unsigned long long idx, unsigned long long val)
+    void inc(idx_t idx, T val)
     {
-        unsigned long long tree_idx = a->at(idx);
+        idx_t tree_idx = a->at(idx);
         tree->at(tree_idx) += val;
         propagate_up(tree_idx, val);
     }
 
 private:
-    void propagate_up(unsigned long long tree_idx, unsigned long long diff)
+    void propagate_up(idx_t tree_idx, T diff)
     {
         while (tree_idx != 0) {
             tree_idx = (tree_idx + 1) / 2 - 1;
@@ -54,7 +64,13 @@ private:
     }
 
 public:
-    unsigned long long find_sum(unsigned long long node, unsigned long long start, unsigned long long end, unsigned long long node_left, unsigned long long node_right)
+    T find_sum(idx_t start, idx_t end)
+    {
+        return find_sum(0, start, end, 0, a->size() - 1);
+    }
+
+private:
+    T find_sum(idx_t node, idx_t start, idx_t end, idx_t node_left, idx_t node_right)
     {
         if (end < node_left || start > node_right)
             return 0;
@@ -66,8 +82,9 @@ public:
                 + find_sum((node + 1) * 2, start, end, (node_left + node_right) / 2 + 1, node_right);
     }
 
-    unique_ptr<vector<unsigned long long>> a;
-    unique_ptr<vector<unsigned long long>> tree;
+public:
+    unique_ptr<vector<T>> a;
+    unique_ptr<vector<T>> tree;
 };
 
 int main()
@@ -75,11 +92,11 @@ int main()
     int n;
     scanf("%d", &n);
 
-    SegTree st_2more(n);
-    SegTree st_1more(n);
+    SegTree<unsigned long long> st_2more(n);
+    SegTree<unsigned long long> st_1more(n);
 
-    st_2more.build_tree(0, 0, n - 1);
-    st_1more.build_tree(0, 0, n - 1);
+    st_2more.build_tree();
+    st_1more.build_tree();
 
     unsigned long long ans = 0;
 
@@ -91,11 +108,10 @@ int main()
         a--;
 
         st_2more.inc(a, 1);
-        st_1more.inc(a, st_2more.find_sum(0, a + 1, n - 1, 0, n - 1));
-        ans += st_1more.find_sum(0, a + 1, n - 1, 0, n - 1);
+        st_1more.inc(a, st_2more.find_sum(a + 1, n - 1));
+        ans += st_1more.find_sum(a + 1, n - 1);
     }
     printf("%llu\n", ans);
-    scanf("%d", &n);
 }
 
 //#define _CRT_SECURE_NO_WARNINGS
